@@ -135,4 +135,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   yThreshold: -10
-  resetPosition: {x: 0, y: 1, z: 0}
+  resetYPosition: 1
