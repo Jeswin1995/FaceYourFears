@@ -3,23 +3,6 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    // Singleton instance to ensure only one GameManager exists
-    public static GameManager Instance { get; private set; }
-
-    private void Awake()
-    {
-        // Implement singleton pattern
-        if (Instance == null)
-        {
-            Instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
-    }
-
     /// <summary>
     /// Loads a scene by its name
     /// </summary>
