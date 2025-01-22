@@ -1,5 +1,6 @@
 using Meta.XR.MRUtilityKit;
 using UnityEngine;
+using System.Collections.Generic;
 
 namespace GamePlay
 {
@@ -70,20 +71,40 @@ namespace GamePlay
                 return;
             }
 
-            // Create a filter for wall surfaces
-            var labelFilter = new LabelFilter(MRUKAnchor.SceneLabels.WALL_FACE);
+            List<MRUKAnchor> walls = new List<MRUKAnchor>();
 
-            // Get all wall surfaces in the room
-            var wallSurfaces = currentRoom.WallAnchors;
-
-            foreach (var surface in wallSurfaces)
+            foreach (var anchorInfo in currentRoom.Anchors)
             {
-                // Spawn the wall prefab
-                GameObject spawnedWall = Instantiate(
-                    wallPrefab,
-                    transform // Parent to this object
-                );
+                if (anchorInfo.HasAnyLabel(MRUKAnchor.SceneLabels.WALL_FACE))
+                {
+                    if (!anchorInfo.PlaneRect.HasValue)
+                    {
+                        Debug.LogWarning($"2D bounds not available for {anchorInfo.name}");
+                        continue;
+                    }
 
+                    Vector2 wallScale = anchorInfo.PlaneRect.Value.size;
+
+                    if (wallScale.x < minimumWallWidth && wallScale.y < minimumWallWidth)
+                    {
+                        Debug.Log($"Skipping wall: {anchorInfo.name} due to insufficient width.");
+                        continue;
+                    }
+
+                    Vector3 adjustedCenter = anchorInfo.transform.position + anchorInfo.transform.forward * wallSpawnOffset;
+
+                    GameObject spawnedWall = Instantiate(
+                        wallPrefab,
+                        adjustedCenter,
+                        Quaternion.LookRotation(-anchorInfo.transform.forward) // Face inwards
+                    );
+
+                    spawnedWall.transform.localScale = new Vector3(wallScale.x, wallScale.y, wallPrefab.transform.localScale.z);
+                    spawnedWall.transform.SetParent(anchorInfo.transform);
+
+                    Debug.Log($"Spawned wall prefab at {adjustedCenter} with 2D size {wallScale}");
+                    walls.Add(anchorInfo);
+                }
             }
         }
     }
