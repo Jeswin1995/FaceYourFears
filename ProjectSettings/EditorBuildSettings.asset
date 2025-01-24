@@ -8,10 +8,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/TitleScene.unity
     guid: 0bc87e3ddd61e51459b8e0820124be17
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/SpiderScene.unity
     guid: 8d03bebe2608e0843a72b79c0f8fc3fd
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/DarkScene.unity
     guid: 03ba3ada6e5ee42498a78e1b57299cd3
   m_configObjects:
