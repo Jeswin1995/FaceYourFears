@@ -25617,29 +25617,30 @@ PrefabInstance:
     - target: {fileID: 4176905736460644474, guid: 5292db714b0f87045a7dfd9be93b1be5,
         type: 3}
       propertyPath: m_text
-      value: Quit
+      value: QUIT
       objectReference: {fileID: 0}
     - target: {fileID: 4176905736460644474, guid: 5292db714b0f87045a7dfd9be93b1be5,
         type: 3}
       propertyPath: m_fontSize
-      value: 42
+      value: 35
       objectReference: {fileID: 0}
     - target: {fileID: 4176905736460644474, guid: 5292db714b0f87045a7dfd9be93b1be5,
         type: 3}
       propertyPath: m_fontAsset
       value: 
-      objectReference: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee,
+      objectReference: {fileID: 11400000, guid: 3f7a02c22ba6f784591aaac93c2ff219,
         type: 2}
     - target: {fileID: 4176905736460644474, guid: 5292db714b0f87045a7dfd9be93b1be5,
         type: 3}
       propertyPath: m_fontSizeBase
-      value: 42
+      value: 35
       objectReference: {fileID: 0}
     - target: {fileID: 4176905736460644474, guid: 5292db714b0f87045a7dfd9be93b1be5,
         type: 3}
       propertyPath: m_sharedMaterial
       value: 
-      objectReference: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+      objectReference: {fileID: -2365920731069641873, guid: 3f7a02c22ba6f784591aaac93c2ff219,
+        type: 2}
     - target: {fileID: 4176905736460644474, guid: 5292db714b0f87045a7dfd9be93b1be5,
         type: 3}
       propertyPath: m_HorizontalAlignment
@@ -28905,29 +28906,30 @@ PrefabInstance:
     - target: {fileID: 4176905736460644474, guid: 5292db714b0f87045a7dfd9be93b1be5,
         type: 3}
       propertyPath: m_text
-      value: Start
+      value: START
       objectReference: {fileID: 0}
     - target: {fileID: 4176905736460644474, guid: 5292db714b0f87045a7dfd9be93b1be5,
         type: 3}
       propertyPath: m_fontSize
-      value: 42
+      value: 35
       objectReference: {fileID: 0}
     - target: {fileID: 4176905736460644474, guid: 5292db714b0f87045a7dfd9be93b1be5,
         type: 3}
       propertyPath: m_fontAsset
       value: 
-      objectReference: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee,
+      objectReference: {fileID: 11400000, guid: 3f7a02c22ba6f784591aaac93c2ff219,
         type: 2}
     - target: {fileID: 4176905736460644474, guid: 5292db714b0f87045a7dfd9be93b1be5,
         type: 3}
       propertyPath: m_fontSizeBase
-      value: 42
+      value: 35
       objectReference: {fileID: 0}
     - target: {fileID: 4176905736460644474, guid: 5292db714b0f87045a7dfd9be93b1be5,
         type: 3}
       propertyPath: m_sharedMaterial
       value: 
-      objectReference: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+      objectReference: {fileID: -2365920731069641873, guid: 3f7a02c22ba6f784591aaac93c2ff219,
+        type: 2}
     - target: {fileID: 4176905736460644474, guid: 5292db714b0f87045a7dfd9be93b1be5,
         type: 3}
       propertyPath: m_HorizontalAlignment
@@ -29178,8 +29180,9 @@ MonoBehaviour:
       m_Calls: []
   m_text: Trypophobia
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 3f7a02c22ba6f784591aaac93c2ff219, type: 2}
+  m_sharedMaterial: {fileID: -2365920731069641873, guid: 3f7a02c22ba6f784591aaac93c2ff219,
+    type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -29267,8 +29270,9 @@ MonoBehaviour:
       m_Calls: []
   m_text: Arachnophobia
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 3f7a02c22ba6f784591aaac93c2ff219, type: 2}
+  m_sharedMaterial: {fileID: -2365920731069641873, guid: 3f7a02c22ba6f784591aaac93c2ff219,
+    type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -29356,8 +29360,9 @@ MonoBehaviour:
       m_Calls: []
   m_text: Claustrophobia
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 3f7a02c22ba6f784591aaac93c2ff219, type: 2}
+  m_sharedMaterial: {fileID: -2365920731069641873, guid: 3f7a02c22ba6f784591aaac93c2ff219,
+    type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -29676,8 +29681,9 @@ MonoBehaviour:
       m_Calls: []
   m_text: Conquer your darkness
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 4143e93fb4fc8eb4ab165366b66233d8, type: 2}
+  m_sharedMaterial: {fileID: 6424203305133845182, guid: 4143e93fb4fc8eb4ab165366b66233d8,
+    type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -29765,8 +29771,9 @@ MonoBehaviour:
       m_Calls: []
   m_text: Spiders here I come
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 4143e93fb4fc8eb4ab165366b66233d8, type: 2}
+  m_sharedMaterial: {fileID: 6424203305133845182, guid: 4143e93fb4fc8eb4ab165366b66233d8,
+    type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -29854,8 +29861,9 @@ MonoBehaviour:
       m_Calls: []
   m_text: Survive the Patterns of Peril
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 4143e93fb4fc8eb4ab165366b66233d8, type: 2}
+  m_sharedMaterial: {fileID: 6424203305133845182, guid: 4143e93fb4fc8eb4ab165366b66233d8,
+    type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
