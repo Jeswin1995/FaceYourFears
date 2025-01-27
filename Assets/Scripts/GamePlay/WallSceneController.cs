@@ -5,12 +5,11 @@ public class WallSceneController : MonoBehaviour
 {
     public WallSpawner wallManager;
     public float movementDistance = 10.0f;
+    public float wallMoveDistance = 1.0f; // Distance for each wall to move before stopping
 
     [SerializeField]
     private float spacing = 2.0f; // Spacing between walls
 
-    [SerializeField]
-    private float initialTimeForMovement = 1.0f; // Initial time each wall spends moving
     [SerializeField]
     private float speedMultiplier = 2f; // Multiplier to decrease time after each lap
 
@@ -21,7 +20,6 @@ public class WallSceneController : MonoBehaviour
     private float movedDistance = 0.0f;
 
     private int currentWallIndex = 0; // Tracks which wall is currently moving
-    private float movementTimer = 0.0f; // Tracks the time for the current wall's movement
     private bool isWallMoving = false;
 
     private int lapCount = 0; // Number of completed laps
@@ -50,7 +48,7 @@ public class WallSceneController : MonoBehaviour
             WallMover mover = walls[currentWallIndex].GetComponent<WallMover>();
             if (mover != null)
             {
-                mover.StartMoving();
+                mover.StartMoving(wallMoveDistance);
                 isWallMoving = true;
             }
         }
@@ -58,17 +56,10 @@ public class WallSceneController : MonoBehaviour
         // Update movement timer
         if (isWallMoving)
         {
-            movementTimer += Time.deltaTime;
-            if (movementTimer >= initialTimeForMovement)
+            WallMover mover = walls[currentWallIndex].GetComponent<WallMover>();
+            if (mover != null && !mover.IsMoving())
             {
-                // Stop moving the current wall
-                WallMover mover = walls[currentWallIndex].GetComponent<WallMover>();
-                if (mover != null)
-                {
-                    mover.StopMoving();
-                }
-
-                // Move to the next wall
+                 // Move to the next wall
                 currentWallIndex++;
                 if (currentWallIndex >= walls.Count)
                 {
@@ -85,12 +76,9 @@ public class WallSceneController : MonoBehaviour
                         lapCount++;
                         // Update speed for all walls
                         UpdateWallSpeeds();
-                        AdjustMovementSpeed();
                     }
                 }
 
-                // Reset timer and prepare for the next wall
-                movementTimer = 0.0f;
                 isWallMoving = false;
             }
         }
@@ -118,14 +106,8 @@ public class WallSceneController : MonoBehaviour
             WallMover mover = wall.GetComponent<WallMover>();
             if (mover != null)
             {
-                mover.AdjustSpeed(speedMultiplier); // Adjust speed using the multiplier
+                mover.IncreaseSpeed(speedMultiplier); // Adjust speed using the multiplier
             }
         }
-    }
-
-    private void AdjustMovementSpeed()
-    {
-        // Decrease the time per wall movement (i.e., increase speed) after each lap
-        initialTimeForMovement /= speedMultiplier ;
-    }
+    }   
 }
