@@ -29,4 +29,10 @@ public class WallMover : MonoBehaviour
     {
         isMoving = false;
     }
+
+    // New method to adjust the speed
+    public void AdjustSpeed(float multiplier)
+    {
+        speed *= multiplier;
+    }
 }

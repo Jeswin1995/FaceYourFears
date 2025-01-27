@@ -1,7 +1,7 @@
 using Meta.XR.MRUtilityKit;
 using UnityEngine;
+using UnityEngine.Events;
 using System.Collections.Generic;
-
 
 public class WallSpawner : MonoBehaviour
 {
@@ -26,6 +26,7 @@ public class WallSpawner : MonoBehaviour
     [SerializeField]
     private int numberOfWalls = 5; // Number of walls to spawn if no MRUK integration
 
+    public UnityEvent WallsSpawnedEvent = new UnityEvent(); // Event triggered when walls are spawned
 
     private bool sceneLoaded = false;
 
@@ -71,10 +72,10 @@ public class WallSpawner : MonoBehaviour
         if (mruk != null)
         {
             SpawnWallsUsingMRUK();
+            WallsSpawnedEvent.Invoke(); // Trigger the event after spawning walls
         }
     }
 
-      
     private void SpawnWallsUsingMRUK()
     {
         if (!sceneLoaded || wallPrefab == null || mruk == null || parentObject == null)
@@ -135,4 +136,3 @@ public class WallSpawner : MonoBehaviour
         return walls;
     }
 }
-
