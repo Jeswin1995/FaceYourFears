@@ -4197,6 +4197,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   layerTransitionSmoothing: 1
+  litLayer: {fileID: 964969799}
+  dimLayer: {fileID: 1163613067}
 --- !u!1 &620038121
 GameObject:
   m_ObjectHideFlags: 0

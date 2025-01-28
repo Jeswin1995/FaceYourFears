@@ -105,8 +105,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 1, y: 1, z: 10}
+  m_Center: {x: 0, y: 0, z: -4.5}
 --- !u!114 &3084248911178860788
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -133,5 +133,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerHeadTag: PlayerHead
-  entryLayer: '[BuildingBlock] Passthrough'
-  exitLayer: '[BuildingBlock] Passthrough_Dark'

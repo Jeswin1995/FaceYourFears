@@ -1,70 +1,36 @@
 using System;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace GamePlay
 {
     public class PTDimmer : MonoBehaviour
     {
-        public float layerTransitionSmoothing = 1f;
-        private OVRPassthroughLayer _activeLayer;
-        private OVRPassthroughLayer[] _passthroughLayers;
+        [SerializeField] private OVRPassthroughLayer litLayer;
+        [SerializeField] private OVRPassthroughLayer dimLayer;
 
-        private void Awake()
+        private void Start()
         {
-            _passthroughLayers = GameObject.FindObjectsByType<OVRPassthroughLayer>(FindObjectsSortMode.None);
+            Assert.IsNotNull(litLayer, "LitLayer (Passthrough) is not assigned");
+            Assert.IsNotNull(dimLayer, "DimLayer (Passthrough) is not assigned");
         }
 
-        public void SetActiveLayer(OVRPassthroughLayer layer)
+        public void SetToDim()
         {
-            _activeLayer = layer;
+            dimLayer.textureOpacity = 1;
+            dimLayer.enabled = true;
+            
+            litLayer.textureOpacity = 0;
+            litLayer.enabled = false;
         }
 
-        public void SetActiveLayer(string layerName)
+        public void SetToLit()
         {
-            _activeLayer = GetPassthroughLayer(layerName);
-        }
-
-        private OVRPassthroughLayer GetPassthroughLayer(string layerName)
-        {
-            OVRPassthroughLayer active = null;
-
-            foreach (var layer in _passthroughLayers)
-            {
-                if (layer.name.Contains(layerName))
-                {
-                    active = layer;
-                }
-            }
-
-            return active;
-        }
-
-        private void FadeIn()
-        {
-            foreach (var layer in _passthroughLayers)
-            {
-                if (layer == _activeLayer)
-                {
-                    layer.textureOpacity = Mathf.Clamp01(layer.textureOpacity + (Time.deltaTime * layerTransitionSmoothing));
-                    layer.enabled = true;
-                }
-                else
-                {
-                    layer.textureOpacity = Mathf.Clamp01(layer.textureOpacity - (Time.deltaTime * layerTransitionSmoothing));
-                    if (layer.textureOpacity < 0.1f)
-                    {
-                        layer.enabled = false;
-                    }
-                }
-            }
-        }
-
-        private void Update()
-        {
-            if (_activeLayer && _activeLayer.textureOpacity < 1)
-            {
-                FadeIn();
-            }
+            litLayer.textureOpacity = 1;
+            litLayer.enabled = true;
+            
+            dimLayer.textureOpacity = 0;
+            dimLayer.enabled = false;
         }
     }
 }

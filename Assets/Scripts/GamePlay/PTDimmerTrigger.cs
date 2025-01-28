@@ -1,6 +1,4 @@
-using System;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace GamePlay
 {
@@ -8,12 +6,10 @@ namespace GamePlay
     {
         public string playerHeadTag = "PlayerHead";
         private PTDimmer _ptDimmer;
-        [SerializeField] private string entryLayer = "[BuildingBlock] Passthrough";
-        [SerializeField] private string exitLayer = "[BuildingBlock] Passthrough_Dark";
 
         private void Awake()
         {
-            _ptDimmer = GameObject.FindObjectOfType<PTDimmer>();
+            _ptDimmer = FindObjectOfType<PTDimmer>();
         }
 
         private void OnTriggerEnter(Collider other)
@@ -22,7 +18,7 @@ namespace GamePlay
 
             if (other.gameObject.CompareTag(playerHeadTag))
             {
-                _ptDimmer.SetActiveLayer(entryLayer);
+                _ptDimmer.SetToDim();
             }
         }
 
@@ -32,7 +28,7 @@ namespace GamePlay
 
             if (other.gameObject.CompareTag(playerHeadTag))
             {
-                _ptDimmer.SetActiveLayer(exitLayer);
+                _ptDimmer.SetToLit();
             }
         }
     }
