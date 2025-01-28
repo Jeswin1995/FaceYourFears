@@ -4149,6 +4149,7 @@ GameObject:
   m_Component:
   - component: {fileID: 616447368}
   - component: {fileID: 616447369}
+  - component: {fileID: 616447370}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -4183,6 +4184,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 845907b806223184b904971bb00e0d43, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &616447370
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 616447367}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 98f05df9a479edd498b77da9188830bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  layerTransitionSmoothing: 1
 --- !u!1 &620038121
 GameObject:
   m_ObjectHideFlags: 0
@@ -7633,7 +7647,7 @@ GameObject:
   - component: {fileID: 1276292419}
   - component: {fileID: 1276292418}
   m_Layer: 0
-  m_Name: trigger
+  m_Name: DimmerTrigger
   m_TagString: PlayerHead
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

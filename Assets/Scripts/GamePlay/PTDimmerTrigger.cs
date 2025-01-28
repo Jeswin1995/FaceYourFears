@@ -1,17 +1,39 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
-public class PTDimmerTrigger : MonoBehaviour
+namespace GamePlay
 {
-    private void OnTriggerEnter(Collider other)
+    public class PTDimmerTrigger : MonoBehaviour
     {
-        Debug.Log($"Trigger Enter: {other.gameObject.name}");
-    }
+        public string playerHeadTag = "PlayerHead";
+        private PTDimmer _ptDimmer;
+        [SerializeField] private string entryLayer = "[BuildingBlock] Passthrough";
+        [SerializeField] private string exitLayer = "[BuildingBlock] Passthrough_Dark";
 
-    private void OnTriggerExit(Collider other)
-    {
-        Debug.Log($"Trigger Exit: {other.gameObject.name}");
+        private void Awake()
+        {
+            _ptDimmer = GameObject.FindObjectOfType<PTDimmer>();
+        }
+
+        private void OnTriggerEnter(Collider other)
+        {
+            // Debug.Log($"Trigger Enter: {other.gameObject.name}");
+
+            if (other.gameObject.CompareTag(playerHeadTag))
+            {
+                _ptDimmer.SetActiveLayer(entryLayer);
+            }
+        }
+
+        private void OnTriggerExit(Collider other)
+        {
+            // Debug.Log($"Trigger Exit: {other.gameObject.name}");
+
+            if (other.gameObject.CompareTag(playerHeadTag))
+            {
+                _ptDimmer.SetActiveLayer(exitLayer);
+            }
+        }
     }
 }

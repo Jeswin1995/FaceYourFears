@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 3721218260939306032}
   - component: {fileID: 3682066216300176157}
   - component: {fileID: 3084248911178860788}
-  - component: {fileID: 6956361077200340239}
   - component: {fileID: -8616753637028283559}
   m_Layer: 0
   m_Name: DimmerWall
@@ -121,27 +120,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 1
---- !u!65 &6956361077200340239
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6367206652986663250}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 10}
-  m_Center: {x: 0, y: 0, z: -5}
 --- !u!114 &-8616753637028283559
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -154,3 +132,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1b2b9f68c342af40a8ae38c3a7ba138, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerHeadTag: PlayerHead
+  entryLayer: '[BuildingBlock] Passthrough'
+  exitLayer: '[BuildingBlock] Passthrough_Dark'
