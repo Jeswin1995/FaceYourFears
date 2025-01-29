@@ -5,24 +5,26 @@ public class WallSceneController : MonoBehaviour
 {
     public WallSpawner wallManager;
     public float movementDistance = 10.0f;
-    public float wallMoveDistance = 1.0f; // Distance for each wall to move before stopping
+    public float wallMoveDistance = 1.0f;
 
     [SerializeField]
-    private float spacing = 2.0f; // Spacing between walls
+    private float speedMultiplier = 2f;
 
-    [SerializeField]
-    private float speedMultiplier = 2f; // Multiplier to decrease time after each lap
-
-    private List<GameObject> walls = new List<GameObject>(); // Cached list of walls
-
-    private bool isReturning = false;
-    private bool isActive = false; // Controls the update loop
+    private List<GameObject> walls = new List<GameObject>();
+    private bool isActive = false;
     private float movedDistance = 0.0f;
 
-    private int currentWallIndex = 0; // Tracks which wall is currently moving
-    private bool isWallMoving = false;
+    private int currentWallIndex = 0;
+    private int lapCount = 0;
 
-    private int lapCount = 0; // Number of completed laps
+    // Event to request wall movement
+    public delegate void WallMoveEvent(int wallIndex);
+    public event WallMoveEvent OnWallMoveRequested;
+
+    // Event to update wallMoveDistance for all walls
+    public delegate void WallMoveDistanceUpdatedEvent(float wallMoveDistance);
+    public event WallMoveDistanceUpdatedEvent OnWallMoveDistanceUpdated;
+
 
     private void Start()
     {
@@ -31,70 +33,107 @@ public class WallSceneController : MonoBehaviour
             wallManager.WallsSpawnedEvent.AddListener(OnWallsSpawned);
         }
     }
+    private void Update()
+    {
+        if (isActive)
+        {
+            bool allWallsSubscribed = true;
+
+            // Check if all walls have subscribed
+            foreach (var wall in walls)
+            {
+                WallMover wallMover = wall.GetComponent<WallMover>();
+                if (wallMover != null && !wallMover.isSubscribed)
+                {
+                    allWallsSubscribed = false;
+                    Debug.LogWarning($"WallMover for wall index {wallMover.wallIndex} is not subscribed yet.");
+                }
+            }
+
+            // Trigger the first wall move once all walls are subscribed
+            if (allWallsSubscribed)
+            {
+                TriggerWallMove(currentWallIndex);
+                // Update wallMoveDistance for all walls
+                UpdateWallMoveDistanceForWalls(wallMoveDistance); // You can set this value dynamically based on your needs
+                isActive = false; // Prevent further checks after the move is triggered
+            }
+        }
+    }
 
     private void OnWallsSpawned()
     {
         walls = wallManager.GetWalls();
-        isActive = true; // Enable the update loop
-    }
-    private void Update()
-    {
-        if (!isActive || walls == null || walls.Count == 0)
-            return;
+        isActive = true;
 
-        if (!isWallMoving)
+        // Subscribe WallMovers to the event
+        foreach (var wall in walls)
         {
-            // Start moving the next wall
-            WallMover mover = walls[currentWallIndex].GetComponent<WallMover>();
-            if (mover != null)
+            WallMover wallMover = wall.GetComponent<WallMover>();
+            if (wallMover != null)
             {
-                mover.StartMoving(wallMoveDistance);
-                isWallMoving = true;
+                wallMover.OnWallMoveCompleted += HandleWallMoveCompleted; // Wall has completed its move
             }
         }
 
-        // Update movement timer
-        if (isWallMoving)
+        // Trigger the first wall move
+        TriggerWallMove(currentWallIndex);
+    }
+
+    private void TriggerWallMove(int wallIndex)
+    {
+        Debug.Log($"WallSceneController: Triggering wall move event for wallIndex: {wallIndex}");
+        OnWallMoveRequested?.Invoke(wallIndex);
+
+    }
+
+    private void UpdateWallMoveDistanceForWalls(float newWallMoveDistance)
+    {
+        OnWallMoveDistanceUpdated?.Invoke(newWallMoveDistance); // Trigger the event to update wallMoveDistance
+        Debug.Log($"WallSceneController: wallMoveDistance updated to {newWallMoveDistance} for all walls.");
+    }
+
+    private void HandleWallMoveCompleted(int wallIndex)
+    {
+        // When a wall completes its move, update the current index and move the next wall
+        if (wallIndex == currentWallIndex)
         {
-            WallMover mover = walls[currentWallIndex].GetComponent<WallMover>();
-            if (mover != null && !mover.IsMoving())
+            currentWallIndex++;
+
+            if (currentWallIndex >= walls.Count)
             {
-                 // Move to the next wall
-                currentWallIndex++;
-                if (currentWallIndex >= walls.Count)
+                currentWallIndex = 0;
+                movedDistance += wallMoveDistance;
+                Debug.Log($"WallSceneController: Moved distance updated to {movedDistance}");
+
+                if (movedDistance >= movementDistance)
                 {
-                    currentWallIndex = 0;
-                    movedDistance += spacing;
+                    UpdateWallDirections();
+                    movedDistance = 0.0f;
 
-                    if (movedDistance >= movementDistance)
-                    {
-                        isReturning = !isReturning;
-                        UpdateWallDirections();
-                        movedDistance = 0.0f;
-
-                        // Increment lap count and adjust speed after each lap
-                        lapCount++;
-                        // Update speed for all walls
-                        UpdateWallSpeeds();
-                    }
+                    // Adjust speed after each lap
+                    lapCount++;
+                    UpdateWallSpeeds();
                 }
-
-                isWallMoving = false;
             }
+
+            // Trigger the next wall move
+            TriggerWallMove(currentWallIndex);
+
         }
     }
 
     private void UpdateWallDirections()
     {
-        Vector3 newDirection = isReturning ? Vector3.back : Vector3.forward;
-
-        var walls = wallManager.GetWalls();
         foreach (var wall in walls)
         {
             WallMover mover = wall.GetComponent<WallMover>();
             if (mover != null)
             {
+                Vector3 currentDirection = mover.GetDirection();
+                Vector3 newDirection = -currentDirection;
                 mover.SetDirection(newDirection);
+                Debug.Log(mover.IsReturning() ? "Wall is now moving inward." : "Wall is now moving outward.");
             }
         }
     }
@@ -106,8 +145,8 @@ public class WallSceneController : MonoBehaviour
             WallMover mover = wall.GetComponent<WallMover>();
             if (mover != null)
             {
-                mover.IncreaseSpeed(speedMultiplier); // Adjust speed using the multiplier
+                mover.IncreaseSpeed(speedMultiplier);
             }
         }
-    }   
+    }
 }

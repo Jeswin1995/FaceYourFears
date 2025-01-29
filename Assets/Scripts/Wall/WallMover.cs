@@ -2,67 +2,115 @@ using UnityEngine;
 
 public class WallMover : MonoBehaviour
 {
-    public float speed = 1.0f; // Speed at which the wall moves
-    private Vector3 direction; // Direction in which the wall moves
-    private float distanceToMove = 0.0f; // The distance the wall should move
-    private float movedDistance = 0.0f; // Distance the wall has moved so far
-    private bool isMoving = false; // Whether the wall is moving
-    private Vector3 initialPosition; // Initial position of the wall for Lerp
+    public float speed = 2.0f;
+    public int wallIndex = -1; // Unique identifier for this wall
+    [SerializeField] private AudioSource wallAudioSource;
+    private Vector3 direction;
+    private float movedDistance = 0.0f;
+    private float lapDistance = 3.0f; // Default value, will be updated by event
+    private Vector3 initialPosition;
+    private bool isMoving = false;
+
+    
+    private bool isReturning = false; // Track if wall is returning
+
+    public bool isSubscribed = false; // Flag to check if the wall has subscribed to the event
+
+    // Event invoked when wall completes its move
+    public delegate void WallMoveCompletedEvent(int wallIndex);
+    public event WallMoveCompletedEvent OnWallMoveCompleted;
 
     void Start()
     {
-        initialPosition = transform.position; // Save the initial position at the start
+        initialPosition = transform.position;
+
+        // Subscribe to the event from the WallSceneController
+        WallSceneController controller = FindObjectOfType<WallSceneController>();
+        if (controller != null)
+        {
+            controller.OnWallMoveRequested += StartMovingFromEvent;
+            controller.OnWallMoveDistanceUpdated += UpdateLapDistance; // Subscribe to lapDistance update event
+            isSubscribed = true;  // Mark as subscribed
+            Debug.Log("WallMover: Successfully subscribed to the WallMoveRequested event.");
+        }
     }
 
     void Update()
     {
-        if (isMoving && movedDistance < distanceToMove)
+        if (isMoving && movedDistance < lapDistance)
         {
-            // Calculate the target position based on the direction and distance
-            Vector3 targetPosition = initialPosition + direction * distanceToMove;
+            float moveStep = speed * Time.deltaTime;
+            transform.position = Vector3.MoveTowards(transform.position, initialPosition + direction * lapDistance, moveStep);
+            movedDistance += moveStep;
 
-            // Smooth movement using Lerp
-            transform.position = Vector3.Lerp(transform.position, targetPosition, speed * Time.deltaTime);
-            movedDistance += speed * Time.deltaTime;
-
-            // If the target distance is reached, stop the movement
-            if (movedDistance >= distanceToMove)
+            if (movedDistance >= lapDistance)
             {
                 isMoving = false;
-                movedDistance = 0.0f; // Reset moved distance for next move
+                movedDistance = 0.0f;
+                OnWallMoveCompleted?.Invoke(wallIndex); // Notify the WallSceneController that the wall is done moving
             }
         }
     }
 
-    // Set the movement direction
-    public void SetDirection(Vector3 newDirection)
+    private void StartMovingFromEvent(int wallIndex)
     {
-        direction = newDirection.normalized;
+        if (this.wallIndex == wallIndex)
+        {
+            StartMoving();
+        }
     }
 
-    // Start moving the wall a certain distance
-    public void StartMoving(float distance)
+    public void StartMoving()
     {
-        distanceToMove = distance; // Set the target distance
-        movedDistance = 0.0f; // Reset moved distance to start fresh
-        isMoving = true; // Start moving
+        movedDistance = 0.0f;
+        initialPosition = transform.position;
+        isMoving = true;
+
+        //play sound when the wall starts moving
+        if (wallAudioSource != null)
+        {
+            wallAudioSource.PlayOneShot(wallAudioSource.clip);
+        }
     }
 
-    // Stop the movement of the wall
-    public void StopMoving()
+    public void UpdateLapDistance(float newLapDistance)
     {
-        isMoving = false;
+        lapDistance = newLapDistance; // Update lapDistance based on the event from WallSceneController
+        Debug.Log($"WallMover: lapDistance updated to {lapDistance} for wall index {wallIndex}");
     }
 
-    // Public getter for isMoving
     public bool IsMoving()
     {
         return isMoving;
     }
 
-    // Method to increase the speed of the movement
+    public void StopMoving()
+    {
+        isMoving = false;
+    }
+
+    public void SetDirection(Vector3 newDirection)
+    {
+        direction = newDirection.normalized;
+    }
+
     public void IncreaseSpeed(float multiplier)
     {
-        speed *= multiplier; // Increase the speed by the multiplier
+        speed *= multiplier;
+    }
+
+    public Vector3 GetDirection()
+    {
+        return direction;
+    }
+
+    public bool IsReturning()
+    {
+        return isReturning;
+    }
+
+    public void SetReturning(bool returning)
+    {
+        isReturning = returning;
     }
 }
