@@ -65,7 +65,6 @@ public class WallSpawner : MonoBehaviour
         if (mruk != null)
         {
             SpawnWallsUsingMRUK();
-            WallsSpawnedEvent.Invoke(); // Trigger the event after spawning walls
         }
     }
 
@@ -82,6 +81,7 @@ public class WallSpawner : MonoBehaviour
         }
 
         Vector3 roomCenter = currentRoom.GetRoomBounds().center; // Get the center of the room
+        int wallIndex = 0; // Start wallIndex from 0
 
         foreach (var anchorInfo in currentRoom.Anchors)
         {
@@ -120,13 +120,19 @@ public class WallSpawner : MonoBehaviour
                 if (wallMover != null)
                 {
                     wallMover.SetDirection(inwardDirection); // Set inward movement direction
+                    wallMover.wallIndex = wallIndex; // Assign a unique wall index
                 }
 
                 Debug.Log($"Spawned wall prefab at {adjustedCenter} facing inward towards the room center.");
+
+                // Increment the wallIndex for the next wall
+                wallIndex++;
             }
         }
 
         Debug.Log($"{walls.Count} walls instantiated using MRUK.");
+
+        WallsSpawnedEvent.Invoke(); // Trigger the event after spawning walls
     }
 
     public List<GameObject> GetWalls()

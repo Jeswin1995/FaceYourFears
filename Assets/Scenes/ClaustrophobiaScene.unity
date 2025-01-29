@@ -3394,8 +3394,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   wallManager: {fileID: 559886410}
-  DistanceOneWall: 1
-  LapDistance: 1
+  movementDistance: 2
+  wallMoveDistance: 1
   speedMultiplier: 1.1
 --- !u!1 &564736656
 GameObject:
