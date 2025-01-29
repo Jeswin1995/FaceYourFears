@@ -5,7 +5,10 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
+  - enabled: 1
+    path: Assets/Scenes/Trypophobia.unity
+    guid: 038b67e9aa90b46ed93b90463b661821
+  - enabled: 1
     path: Assets/Scenes/TitleScene.unity
     guid: 0bc87e3ddd61e51459b8e0820124be17
   - enabled: 0
@@ -14,9 +17,6 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/DarkScene.unity
     guid: 03ba3ada6e5ee42498a78e1b57299cd3
-  - enabled: 1
-    path: Assets/Scenes/Trypophobia.unity
-    guid: 038b67e9aa90b46ed93b90463b661821
   m_configObjects:
     Unity.XR.Oculus.Settings: {fileID: 11400000, guid: afd956abb2ad39a4f8d872c460aa9fe4,
       type: 2}

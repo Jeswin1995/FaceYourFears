@@ -9960,8 +9960,8 @@ MonoBehaviour:
   heightFromGround: 0.2
   maxObjectsPerBatch: 20
   totalDuration: 60
-  startingScale: 0.2
-  endingScale: 0.01
+  startingScale: 0.3
+  endingScale: 0.05
   spawnInterval: 2
 --- !u!114 &677711647
 MonoBehaviour:
@@ -14561,7 +14561,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: a0c711ca7caf24a9489bc2bfc19884a0, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 46ba86ac1a19443e9a701c960a170c8a, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
@@ -15879,8 +15879,8 @@ MonoBehaviour:
   heightFromGround: 0.2
   maxObjectsPerBatch: 20
   totalDuration: 60
-  startingScale: 0.2
-  endingScale: 0.01
+  startingScale: 0.3
+  endingScale: 0.05
   spawnInterval: 2
 --- !u!114 &1096198423
 MonoBehaviour:
@@ -26176,8 +26176,8 @@ MonoBehaviour:
   heightFromGround: -0.2
   maxObjectsPerBatch: 20
   totalDuration: 60
-  startingScale: 0.2
-  endingScale: 0.01
+  startingScale: 0.3
+  endingScale: 0.05
   spawnInterval: 2
 --- !u!1 &1876414804
 GameObject:
