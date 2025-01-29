@@ -16,10 +16,13 @@ EditorBuildSettings:
     guid: 03ba3ada6e5ee42498a78e1b57299cd3
   - enabled: 0
     path: Assets/Scenes/ClaustrophobiaScene.unity
-    guid: 0509d47e75fddca4793eff0adca9a569
-  - enabled: 1
-    path: Assets/Scenes/PassthroughDimming.unity
     guid: 99cca891b22303d4c9f556db03810147
+  - enabled: 1
+    path: Assets/Scenes/ClaustrophobiaScene.unity
+    guid: 99cca891b22303d4c9f556db03810147
+  - enabled: 0
+    path: Assets/Scenes/TestRoom.unity
+    guid: ee3351b4b1d642e44b1d3d71bb624873
   m_configObjects:
     Unity.XR.Oculus.Settings: {fileID: 11400000, guid: afd956abb2ad39a4f8d872c460aa9fe4,
       type: 2}
