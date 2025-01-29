@@ -4,11 +4,10 @@ using UnityEngine;
 public class WallSceneController : MonoBehaviour
 {
     public WallSpawner wallManager;
-    public float movementDistance = 10.0f;
-    public float wallMoveDistance = 1.0f; // Distance for each wall to move before stopping
+    public float DistanceOneWall = 10.0f;
+    public float LapDistance = 1.0f; // Distance for each wall to move before stopping
 
-    [SerializeField]
-    private float spacing = 2.0f; // Spacing between walls
+
 
     [SerializeField]
     private float speedMultiplier = 2f; // Multiplier to decrease time after each lap
@@ -30,12 +29,23 @@ public class WallSceneController : MonoBehaviour
         {
             wallManager.WallsSpawnedEvent.AddListener(OnWallsSpawned);
         }
+
     }
 
     private void OnWallsSpawned()
     {
         walls = wallManager.GetWalls();
         isActive = true; // Enable the update loop
+        foreach (var wall in walls)
+        {
+            WallMover wallMover = wall.GetComponent<WallMover>();
+            if (wallMover != null)
+            {
+                // Instead of overriding, use the direction set by WallSpawner
+                Vector3 correctDirection = wallMover.GetDirection();
+                wallMover.SetDirection(correctDirection);
+            }
+        }
     }
     private void Update()
     {
@@ -48,7 +58,7 @@ public class WallSceneController : MonoBehaviour
             WallMover mover = walls[currentWallIndex].GetComponent<WallMover>();
             if (mover != null)
             {
-                mover.StartMoving(wallMoveDistance);
+                mover.StartMoving(LapDistance);
                 isWallMoving = true;
             }
         }
@@ -59,22 +69,23 @@ public class WallSceneController : MonoBehaviour
             WallMover mover = walls[currentWallIndex].GetComponent<WallMover>();
             if (mover != null && !mover.IsMoving())
             {
-                 // Move to the next wall
+                // Move to the next wall
                 currentWallIndex++;
+
                 if (currentWallIndex >= walls.Count)
                 {
                     currentWallIndex = 0;
-                    movedDistance += spacing;
+                    movedDistance += LapDistance;
+                    Debug.Log(movedDistance);
 
-                    if (movedDistance >= movementDistance)
+                    if (movedDistance >= DistanceOneWall)
                     {
                         isReturning = !isReturning;
                         UpdateWallDirections();
                         movedDistance = 0.0f;
 
-                        // Increment lap count and adjust speed after each lap
+                        // Adjust speed after each lap
                         lapCount++;
-                        // Update speed for all walls
                         UpdateWallSpeeds();
                     }
                 }
@@ -84,20 +95,22 @@ public class WallSceneController : MonoBehaviour
         }
     }
 
+
     private void UpdateWallDirections()
     {
-        Vector3 newDirection = isReturning ? Vector3.back : Vector3.forward;
-
-        var walls = wallManager.GetWalls();
         foreach (var wall in walls)
         {
             WallMover mover = wall.GetComponent<WallMover>();
             if (mover != null)
             {
+                // Reverse the direction instead of applying a global forward/backward
+                Vector3 currentDirection = mover.GetDirection();
+                Vector3 newDirection = isReturning ? -currentDirection : currentDirection;
                 mover.SetDirection(newDirection);
             }
         }
     }
+
 
     private void UpdateWallSpeeds()
     {

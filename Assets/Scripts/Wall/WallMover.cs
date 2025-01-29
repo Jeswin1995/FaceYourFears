@@ -2,34 +2,34 @@ using UnityEngine;
 
 public class WallMover : MonoBehaviour
 {
-    public float speed = 1.0f; // Speed at which the wall moves
-    private Vector3 direction; // Direction in which the wall moves
-    private float distanceToMove = 0.0f; // The distance the wall should move
-    private float movedDistance = 0.0f; // Distance the wall has moved so far
+    public float speed = 2.0f; // Speed at which the wall moves
+    private Vector3 direction; // Direction the wall moves
+    private float distanceToMove = 0.0f; // Distance to move for this step
+    private float movedDistance = 0.0f; // Distance the wall has moved
     private bool isMoving = false; // Whether the wall is moving
-    private Vector3 initialPosition; // Initial position of the wall for Lerp
+    private Vector3 initialPosition; // Initial position of the wall for reference
+    private float lapDistance = 3.0f; // Total distance this wall should move in a lap
 
     void Start()
     {
-        initialPosition = transform.position; // Save the initial position at the start
+        initialPosition = transform.position; // Save initial position for reference
     }
 
     void Update()
     {
-        if (isMoving && movedDistance < distanceToMove)
+        if (isMoving && movedDistance < lapDistance)
         {
-            // Calculate the target position based on the direction and distance
-            Vector3 targetPosition = initialPosition + direction * distanceToMove;
+            // Calculate the step size for movement
+            float moveStep = speed * Time.deltaTime;
 
-            // Smooth movement using Lerp
-            transform.position = Vector3.Lerp(transform.position, targetPosition, speed * Time.deltaTime);
-            movedDistance += speed * Time.deltaTime;
+            // Move the wall towards the target position
+            transform.position = Vector3.MoveTowards(transform.position, initialPosition + direction * lapDistance, moveStep);
+            movedDistance += moveStep;
 
-            // If the target distance is reached, stop the movement
-            if (movedDistance >= distanceToMove)
+            if (movedDistance >= lapDistance)
             {
                 isMoving = false;
-                movedDistance = 0.0f; // Reset moved distance for next move
+                movedDistance = 0.0f; // Reset moved distance for next movement
             }
         }
     }
@@ -43,12 +43,13 @@ public class WallMover : MonoBehaviour
     // Start moving the wall a certain distance
     public void StartMoving(float distance)
     {
-        distanceToMove = distance; // Set the target distance
-        movedDistance = 0.0f; // Reset moved distance to start fresh
-        isMoving = true; // Start moving
+        lapDistance = distance; // Set the movement distance for this lap
+        movedDistance = 0.0f;
+        isMoving = true;
+        initialPosition = transform.position; // Update the initial position for the next lap
     }
 
-    // Stop the movement of the wall
+    // Stop moving the wall
     public void StopMoving()
     {
         isMoving = false;
@@ -60,9 +61,14 @@ public class WallMover : MonoBehaviour
         return isMoving;
     }
 
-    // Method to increase the speed of the movement
+    // Increase speed for movement
     public void IncreaseSpeed(float multiplier)
     {
-        speed *= multiplier; // Increase the speed by the multiplier
+        speed *= multiplier; // Increase speed by the multiplier
+    }
+
+    public Vector3 GetDirection()
+    {
+        return direction;
     }
 }

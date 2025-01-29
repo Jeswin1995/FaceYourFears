@@ -20,16 +20,9 @@ public class WallSpawner : MonoBehaviour
     [SerializeField]
     private float wallSpawnOffset = 0.01f; // Small offset from the actual wall surface
 
-    [SerializeField]
-    private Vector3 initialPosition = Vector3.zero; // Default position for walls
-
-    [SerializeField]
-    private int numberOfWalls = 5; // Number of walls to spawn if no MRUK integration
-
     public UnityEvent WallsSpawnedEvent = new UnityEvent(); // Event triggered when walls are spawned
 
     private bool sceneLoaded = false;
-
     private List<GameObject> walls = new List<GameObject>(); // List of spawned walls
 
     private void Awake()
@@ -88,6 +81,8 @@ public class WallSpawner : MonoBehaviour
             return;
         }
 
+        Vector3 roomCenter = currentRoom.GetRoomBounds().center; // Get the center of the room
+
         foreach (var anchorInfo in currentRoom.Anchors)
         {
             if (anchorInfo.HasAnyLabel(MRUKAnchor.SceneLabels.WALL_FACE))
@@ -110,21 +105,24 @@ public class WallSpawner : MonoBehaviour
                 GameObject wall = Instantiate(
                     wallPrefab,
                     adjustedCenter,
-                    Quaternion.LookRotation(anchorInfo.transform.forward), // Face inwards
+                    Quaternion.LookRotation(anchorInfo.transform.forward), // Align wall with anchor
                     parentObject
                 );
 
                 wall.transform.localScale = new Vector3(wallScale.x, wallScale.y, wallPrefab.transform.localScale.z);
                 walls.Add(wall);
 
+                // Calculate inward direction
+                Vector3 inwardDirection = (roomCenter - wall.transform.position).normalized;
+
                 // Assign movement behavior
                 WallMover wallMover = wall.GetComponent<WallMover>();
                 if (wallMover != null)
                 {
-                    wallMover.SetDirection(Vector3.forward); // Initial movement direction
+                    wallMover.SetDirection(inwardDirection); // Set inward movement direction
                 }
 
-                Debug.Log($"Spawned wall prefab at {adjustedCenter} with 2D size {wallScale}");
+                Debug.Log($"Spawned wall prefab at {adjustedCenter} facing inward towards the room center.");
             }
         }
 
