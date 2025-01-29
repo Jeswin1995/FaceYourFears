@@ -930,7 +930,6 @@ GameObject:
   m_Component:
   - component: {fileID: 69538781}
   - component: {fileID: 69538782}
-  - component: {fileID: 69538783}
   m_Layer: 0
   m_Name: Star_Audio
   m_TagString: Untagged
@@ -1049,19 +1048,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &69538783
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 69538780}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d26481a44e385fc4fb250700ab5db16d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  audioSource: {fileID: 69538782}
 --- !u!1 &74734515
 GameObject:
   m_ObjectHideFlags: 0
@@ -18878,6 +18864,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6819193312536856901, guid: d20e5167c9cb0324ca767fde91f2f10f,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6819193312958872913, guid: d20e5167c9cb0324ca767fde91f2f10f,
         type: 3}
