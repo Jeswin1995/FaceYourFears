@@ -3,13 +3,15 @@ using UnityEngine;
 public class WallMover : MonoBehaviour
 {
     public float speed = 2.0f;
+    public int wallIndex = -1; // Unique identifier for this wall
+    [SerializeField] private AudioSource wallAudioSource;
     private Vector3 direction;
     private float movedDistance = 0.0f;
     private float lapDistance = 3.0f; // Default value, will be updated by event
     private Vector3 initialPosition;
     private bool isMoving = false;
 
-    public int wallIndex = -1; // Unique identifier for this wall
+    
     private bool isReturning = false; // Track if wall is returning
 
     public bool isSubscribed = false; // Flag to check if the wall has subscribed to the event
@@ -63,6 +65,12 @@ public class WallMover : MonoBehaviour
         movedDistance = 0.0f;
         initialPosition = transform.position;
         isMoving = true;
+
+        //play sound when the wall starts moving
+        if (wallAudioSource != null)
+        {
+            wallAudioSource.PlayOneShot(wallAudioSource.clip);
+        }
     }
 
     public void UpdateLapDistance(float newLapDistance)
