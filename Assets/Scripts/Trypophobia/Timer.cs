@@ -10,7 +10,7 @@ public class Timer : MonoBehaviour
     [SerializeField] private bool startOnAwake = true;
 
     [Header("Display Settings")]
-    [SerializeField] private TextMeshPro timerText;
+    [SerializeField] private TMP_Text timerText;
     [SerializeField] private string timeFormat = "mm:ss";
 
     [Header("Events")]

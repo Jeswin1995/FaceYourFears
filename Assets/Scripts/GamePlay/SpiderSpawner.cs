@@ -87,5 +87,16 @@ namespace GamePlay
         {
             isSpawning = true;
         }
+
+        public void DestroyAllSpidersAndStopSpawning()
+        {
+            isSpawning = false;
+            GameObject[] spiders = GameObject.FindGameObjectsWithTag("Spider");
+            foreach (GameObject spider in spiders)
+            {
+                Destroy(spider);
+            }
+            Debug.Log("All spiders destroyed and spawning stopped.");
+        }
     }
 }

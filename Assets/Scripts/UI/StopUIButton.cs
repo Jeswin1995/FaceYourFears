@@ -32,45 +32,7 @@ public class StopUIButton : MonoBehaviour
         if(_interactableView)
             InteractableView.WhenStateChanged += UpdateVisualState;
     }
-
-    private void Start()
-    {
-        StartCountdown();
-    }
-    
-    private void StartCountdown()
-    {
-        remainingTime = timeLimit;
-        isCountingDown = true;
-        StartCoroutine(CountdownRoutine());
-    }
-
-    private void StopCountdown()
-    {
-        isCountingDown = false;
-        StopCoroutine(CountdownRoutine());
-    }
-
-    IEnumerator CountdownRoutine()
-    {
-        while (remainingTime > 0 && isCountingDown)
-        {
-            remainingTime -= Time.deltaTime;
-
-            // Update the text in the format "MM:SS"
-            TimeSpan timeSpan = TimeSpan.FromSeconds(remainingTime);
-            text.text = $"{timeSpan.Minutes:D2}:{timeSpan.Seconds:D2}";
-
-            yield return null;
-        }
-
-        if (remainingTime <= 0)
-        {
-            text.text = "00:00";
-            text.color = Color.red;
-            OnTimeOut.Invoke(); // Trigger timeout event
-        }
-    }
+ 
 
 
     public void PressButton()
@@ -118,6 +80,5 @@ public class StopUIButton : MonoBehaviour
     {
         if(_interactableView)
             InteractableView.WhenStateChanged -= UpdateVisualState;
-        StopCountdown();
     }
 }

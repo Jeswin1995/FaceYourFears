@@ -33,6 +33,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Spider Controller Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 8634589293312570784, guid: 0f80abe9758af794c94d829c20727117,
+        type: 3}
+      propertyPath: m_TagString
+      value: Spider
+      objectReference: {fileID: 0}
     - target: {fileID: 8634589293312570788, guid: 0f80abe9758af794c94d829c20727117,
         type: 3}
       propertyPath: m_LocalScale.x

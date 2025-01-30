@@ -25,6 +25,8 @@ TagManager:
   - SamplesInfoPanel
   - QDSUIToggleCheckboxRadio
   - QDSUISection
+  - PlayerHead
+  - Spider
   layers:
   - Default
   - TransparentFX

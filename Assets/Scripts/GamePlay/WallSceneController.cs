@@ -84,7 +84,6 @@ public class WallSceneController : MonoBehaviour
     {
         Debug.Log($"WallSceneController: Triggering wall move event for wallIndex: {wallIndex}");
         OnWallMoveRequested?.Invoke(wallIndex);
-
     }
 
     private void UpdateWallMoveDistanceForWalls(float newWallMoveDistance)
@@ -119,7 +118,6 @@ public class WallSceneController : MonoBehaviour
 
             // Trigger the next wall move
             TriggerWallMove(currentWallIndex);
-
         }
     }
 
@@ -148,5 +146,19 @@ public class WallSceneController : MonoBehaviour
                 mover.IncreaseSpeed(speedMultiplier);
             }
         }
+    }
+
+    /// <summary>
+    /// Destroys all spawned wall prefabs and stops the wall movement logic.
+    /// </summary>
+    public void DestroyAllWallsAndStop()
+    {
+        foreach (var wall in walls)
+        {
+            Destroy(wall);
+        }
+        walls.Clear();
+        isActive = false;
+        Debug.Log("WallSceneController: All walls destroyed and movement logic stopped.");
     }
 }
